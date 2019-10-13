@@ -13,6 +13,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'knock'
 gem 'rack-cors'
+gem 'fast_jsonapi'
+gem 'redis'
 
 group :development, :test do
   gem 'pry'
