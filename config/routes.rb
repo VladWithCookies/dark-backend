@@ -3,6 +3,8 @@ Rails.application.routes.draw do
     namespace 'v1' do
       post '/user_token' => 'user_token#create'
 
+      resources :users, only: %i(index)
+
       resources :chats, only: %i(index create update destroy) do
         resources :messages, only: %i(index create update destroy), shallow: true
       end
