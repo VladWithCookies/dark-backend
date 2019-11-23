@@ -5,10 +5,14 @@ class Api::V1::ChatsController < ApplicationController
   end
 
   def create
-    chat = current_user.chats.new(chat_params)
+    chat = Chat.new(chat_params)
+    chat.users << current_user
+
+    users = User.where(id: params[:user_ids])
+    chat.users.concat(users)
 
     if chat.save
-      serialized_json = ChatSerializer.new(chat, { include: [{ messages: [:user] }] }).serialized_json
+      serialized_json = ChatSerializer.new(chat, { include: [:messages, :users] }).serialized_json
       ActionCable.server.broadcast('chats_channel', serialized_json)
       head :ok
     end
