@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       post '/user_token' => 'user_token#create'
 
       resources :users, only: %i(index)
+      resources :current_users, only: %i(index)
 
       resources :chats, only: %i(index create update destroy) do
         resources :messages, only: %i(index create update destroy), shallow: true
