@@ -8,7 +8,8 @@ class Api::V1::ChatsController < ApplicationController
     chat = Chat.new(chat_params)
     chat.users << current_user
 
-    users = User.where(id: params[:user_ids])
+    user_ids = params[:user_ids].delete(current_user.id)
+    users = User.where(id: user_ids)
     chat.users.concat(users)
 
     if chat.save
